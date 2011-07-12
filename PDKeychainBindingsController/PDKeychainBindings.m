@@ -34,6 +34,79 @@
     [super dealloc];
 }
 
+- (id)objectForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (void)setObject:(id)value forKey:(NSString *)defaultName {
+    
+}
+
+- (void)removeObjectForKey:(NSString *)defaultName {
+    
+}
+
+
+- (NSString *)stringForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (NSArray *)arrayForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (NSDictionary *)dictionaryForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (NSData *)dataForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (NSArray *)stringArrayForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+- (NSInteger)integerForKey:(NSString *)defaultName {
+    return (NSInteger) nil; //TODO: Implement this
+}
+
+- (float)floatForKey:(NSString *)defaultName {
+    return (float) 0.0; //TODO: Implement this
+}
+
+- (double)doubleForKey:(NSString *)defaultName {
+    return (double) 0.0; //TODO: Implement this
+}
+
+- (BOOL)boolForKey:(NSString *)defaultName {
+    return (BOOL) nil; //TODO: Implement this
+}
+
+- (NSURL *)URLForKey:(NSString *)defaultName {
+    return nil; //TODO: Implement this
+}
+
+
+- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName {
+    
+}
+
+- (void)setFloat:(float)value forKey:(NSString *)defaultName {
+    
+}
+
+- (void)setDouble:(double)value forKey:(NSString *)defaultName {
+    
+}
+
+- (void)setBool:(BOOL)value forKey:(NSString *)defaultName {
+    
+}
+
+- (void)setURL:(NSURL *)url forKey:(NSString *)defaultName {
+    
+}
 
 
 @end

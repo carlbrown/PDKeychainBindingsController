@@ -6,6 +6,15 @@
 //  Copyright 2011 PDAgent, LLC. All rights reserved.
 //
 
+//  There's (understandably) a lot of controversy about how (and whether)
+//   to use the Singleton pattern for Cocoa.  I am here because I'm 
+//   trying to emulate existing Singleton (NSUserDefaults) behavior
+//
+//   and I'm using the singleton methodology from
+//   http://www.duckrowing.com/2010/05/21/using-the-singleton-pattern-in-objective-c/
+//   because it seemed reasonable
+
+
 #import "PDKeychainBindingsController.h"
 
 static PDKeychainBindingsController *sharedInstance = nil;

@@ -13,6 +13,7 @@
 @interface PDKeychainBindingsController : NSObject {
 @private
     PDKeychainBindings *_keychainBindings;
+    NSMutableDictionary *_valueBuffer;
 }
 
 
