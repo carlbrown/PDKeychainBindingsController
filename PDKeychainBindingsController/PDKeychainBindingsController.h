@@ -16,7 +16,6 @@
     NSMutableDictionary *_valueBuffer;
 }
 
-
 + (PDKeychainBindingsController *)sharedKeychainBindingsController;
 - (PDKeychainBindings *) keychainBindings;
 

@@ -21,8 +21,6 @@ static PDKeychainBindingsController *sharedInstance = nil;
 
 @implementation PDKeychainBindingsController
 
-
-
 + (PDKeychainBindingsController *)sharedKeychainBindingsController 
 {
 	@synchronized (self) {
@@ -83,11 +81,14 @@ static PDKeychainBindingsController *sharedInstance = nil;
     if (_keychainBindings == nil) {
         _keychainBindings = [[PDKeychainBindings alloc] init]; 
     }
+    if (_valueBuffer==nil) {
+        _valueBuffer = [[NSMutableDictionary alloc] init];
+    }
     return _keychainBindings;
 }
 
 -(id) values {
-    return [self keychainBindings];
+    return _valueBuffer;
 }
 
 @end

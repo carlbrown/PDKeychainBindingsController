@@ -35,15 +35,16 @@
 }
 
 - (id)objectForKey:(NSString *)defaultName {
-    return nil; //TODO: Implement this
+    //return [[[PDKeychainBindingsController sharedKeychainBindingsController] valueBuffer] objectForKey:defaultName];
+    return [[PDKeychainBindingsController sharedKeychainBindingsController] valueForKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName {
-    
+    [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:value forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
 - (void)removeObjectForKey:(NSString *)defaultName {
-    
+    [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:nil forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
 
@@ -80,7 +81,7 @@
 }
 
 - (BOOL)boolForKey:(NSString *)defaultName {
-    return (BOOL) nil; //TODO: Implement this
+    return NO; //TODO: Implement this
 }
 
 - (NSURL *)URLForKey:(NSString *)defaultName {
