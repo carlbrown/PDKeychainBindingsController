@@ -23,3 +23,5 @@ As background, I'm writing a Mac App that has a NSSecureTextField in its Prefere
 
 I thought this class would potentially be useful to other people, so I'm making it its own module for release under an MIT license.
 
+
+**WARNING**: This code still has a lot of debugging info in it, so if you don't want passwords to be printed to the console, take the NSLog's out. (I'm working on cleaning it up)
