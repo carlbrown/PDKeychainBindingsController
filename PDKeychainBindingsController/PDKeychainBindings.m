@@ -49,7 +49,7 @@
 
 
 - (NSString *)stringForKey:(NSString *)defaultName {
-    return nil; //TODO: Implement this
+    return (NSString *) [self objectForKey:defaultName];
 }
 
 - (NSArray *)arrayForKey:(NSString *)defaultName {

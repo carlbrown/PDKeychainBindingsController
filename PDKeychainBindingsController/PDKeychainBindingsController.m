@@ -16,6 +16,7 @@
 
 
 #import "PDKeychainBindingsController.h"
+#import <Security/Security.h>
 
 static PDKeychainBindingsController *sharedInstance = nil;
 
@@ -54,7 +55,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
     return self;
 }
 
-- (void)release
+- (oneway void)release
 {
     //do nothing
 }
@@ -77,17 +78,26 @@ static PDKeychainBindingsController *sharedInstance = nil;
 	}
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *) context {	
+    NSLog(@"Observed change");
+}
+
 - (PDKeychainBindings *) keychainBindings {
     if (_keychainBindings == nil) {
         _keychainBindings = [[PDKeychainBindings alloc] init]; 
     }
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
+        [self addObserver:self forKeyPath:@"values.*" options:0 context:NULL];
     }
     return _keychainBindings;
 }
 
 -(id) values {
+    if (_valueBuffer==nil) {
+        _valueBuffer = [[NSMutableDictionary alloc] init];
+        [self addObserver:self forKeyPath:@"values.*" options:0 context:NULL];
+    }
     return _valueBuffer;
 }
 
