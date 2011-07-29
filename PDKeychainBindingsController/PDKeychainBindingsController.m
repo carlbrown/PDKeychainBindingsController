@@ -23,6 +23,9 @@ static PDKeychainBindingsController *sharedInstance = nil;
 @implementation PDKeychainBindingsController
 
 
+#pragma mark -
+#pragma mark Keychain Access
+
 + (NSString*)serviceName {
 	return [[NSBundle mainBundle] bundleIdentifier];
 }
@@ -99,6 +102,9 @@ static PDKeychainBindingsController *sharedInstance = nil;
 #endif
 }
 
+#pragma mark -
+#pragma mark Singleton Stuff
+
 + (PDKeychainBindingsController *)sharedKeychainBindingsController 
 {
 	@synchronized (self) {
@@ -155,8 +161,12 @@ static PDKeychainBindingsController *sharedInstance = nil;
 	}
 }
 
+#pragma mark -
+#pragma mark Business Logic
+
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *) context {	
-    NSLog(@"Observed change");
+    NSLog(@"Observed change"); //Just for debugging
 }
 
 - (PDKeychainBindings *) keychainBindings {
@@ -165,7 +175,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
     }
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
-        [self addObserver:self forKeyPath:@"values.*" options:0 context:NULL];
+        [self addObserver:self forKeyPath:@"values.testObject" options:0 context:NULL];
     }
     return _keychainBindings;
 }
@@ -173,9 +183,33 @@ static PDKeychainBindingsController *sharedInstance = nil;
 -(id) values {
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
-        [self addObserver:self forKeyPath:@"values.*" options:0 context:NULL];
+        [self addObserver:self forKeyPath:@"values.testObject" options:0 context:NULL];
     }
     return _valueBuffer;
+}
+
+- (id)valueForKeyPath:(NSString *)keyPath {
+    return [super valueForKeyPath:keyPath];
+}
+
+- (id)valueForKey:(NSString *)key {
+    return [super valueForKey:key];
+}
+
+- (id)valueForUndefinedKey:(NSString *)key {
+    return [super valueForUndefinedKey:key];
+}
+
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath {
+    [super setValue:value forKeyPath:keyPath];
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    [super setValue:value forUndefinedKey:key];
+}
+
+- (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues {
+    [super setValuesForKeysWithDictionary:keyedValues];
 }
 
 @end
