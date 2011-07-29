@@ -12,6 +12,14 @@
 
 @implementation PDKeychainBindingsControllerTest
 
+- (NSString*) stringWithUUID {
+    CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
+    //get the string representation of the UUID
+    NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    CFRelease(uuidObj);
+    return [uuidString autorelease];
+}
+
 - (void)setUp
 {
     [super setUp];
@@ -26,6 +34,7 @@
     [super tearDown];
 }
 
+
 - (void)testStandardBindingsExists
 {
     STAssertNotNil([PDKeychainBindingsController sharedKeychainBindingsController], @"PDKeychainBindingsController sharedKeychainBindingsController was nil!!");
@@ -33,16 +42,22 @@
 
 - (void)testStandardBindingsControllerSetRetrieval
 {
+    //Decide what we're going to set it to
+    NSString *targetString = [self stringWithUUID];
+
     //Pull the PDKeychainBindingsController into a local variable just so we can look at it in the debugger if we want to see what's going on
     PDKeychainBindingsController *controller = [PDKeychainBindingsController sharedKeychainBindingsController];
-    [controller setValue:@"bar" forKeyPath:[NSString stringWithFormat:@"values.%@",@"myTestString"]];
+    [controller setValue:targetString forKeyPath:[NSString stringWithFormat:@"values.%@",@"myTestString"]];
 
     NSObject *currentValue = [controller valueForKeyPath:[NSString stringWithFormat:@"values.%@",@"myTestString"]];
     STAssertNotNil(currentValue, @"could not get value back");
     //Now make sure it got set correctly
     STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"myTestString"], @"PDKeychainBindings sharedKeychainBindings object for myTestString was nil!!");
-    STAssertEquals(@"bar", [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"myTestString"], @"Did not retrieve object correctly");
+    STAssertEquals(targetString, [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"myTestString"], @"Did not retrieve object correctly");
     
+    //Now clean up after ourselves
+    [[PDKeychainBindings sharedKeychainBindings] removeObjectForKey:@"myTestString"];
+
 }
 
 /*
