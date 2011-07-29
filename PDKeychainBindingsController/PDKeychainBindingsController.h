@@ -21,6 +21,9 @@
 
 - (id)values;    // accessor object for PDKeychainBindings values. This property is observable using key-value observing.
 
++ (NSString*)serviceName;
++ (NSString*)stringForKey:(NSString*)key;
++ (BOOL)storeString:(NSString*)string forKey:(NSString*)key;
 
 @end
 

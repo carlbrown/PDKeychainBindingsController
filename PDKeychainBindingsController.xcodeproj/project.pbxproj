@@ -34,6 +34,10 @@
 		D39ABE7013CA85E40078DA13 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = D39ABE6D13CA85E40078DA13 /* PDKeychainBindings.m */; };
 		D39ABE7F13CA87A60078DA13 /* PDKeychainBindingsControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D39ABE7E13CA87A60078DA13 /* PDKeychainBindingsControllerTest.m */; };
 		D39ABE8513CA8C620078DA13 /* PDKeychainBindingsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D39ABE8413CA8C620078DA13 /* PDKeychainBindingsTest.m */; };
+		D3EC808813E24824000EA2F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EC808713E24824000EA2F5 /* Security.framework */; };
+		D3EC808A13E2482D000EA2F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EC808913E2482D000EA2F5 /* Security.framework */; };
+		D3EC808C13E24836000EA2F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EC808B13E24836000EA2F5 /* Security.framework */; };
+		D3EC808E13E2483E000EA2F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EC808D13E2483E000EA2F5 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,10 @@
 		D39ABE7E13CA87A60078DA13 /* PDKeychainBindingsControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindingsControllerTest.m; sourceTree = "<group>"; };
 		D39ABE8313CA8C620078DA13 /* PDKeychainBindingsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsTest.h; sourceTree = "<group>"; };
 		D39ABE8413CA8C620078DA13 /* PDKeychainBindingsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindingsTest.m; sourceTree = "<group>"; };
+		D3EC808713E24824000EA2F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D3EC808913E2482D000EA2F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D3EC808B13E24836000EA2F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D3EC808D13E2483E000EA2F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EC808813E24824000EA2F5 /* Security.framework in Frameworks */,
 				D39ABDF213CA80D90078DA13 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EC808A13E2482D000EA2F5 /* Security.framework in Frameworks */,
 				D39ABE0F13CA80D90078DA13 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EC808C13E24836000EA2F5 /* Security.framework in Frameworks */,
 				D39ABE2913CA81090078DA13 /* UIKit.framework in Frameworks */,
 				D39ABE2A13CA81090078DA13 /* Foundation.framework in Frameworks */,
 				D39ABE2B13CA81090078DA13 /* CoreGraphics.framework in Frameworks */,
@@ -130,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EC808E13E2483E000EA2F5 /* Security.framework in Frameworks */,
 				D39ABE4713CA81090078DA13 /* UIKit.framework in Frameworks */,
 				D39ABE4813CA81090078DA13 /* Foundation.framework in Frameworks */,
 				D39ABE4913CA81090078DA13 /* CoreGraphics.framework in Frameworks */,
@@ -142,6 +154,10 @@
 		D39ABDA313CA80B50078DA13 = {
 			isa = PBXGroup;
 			children = (
+				D3EC808D13E2483E000EA2F5 /* Security.framework */,
+				D3EC808B13E24836000EA2F5 /* Security.framework */,
+				D3EC808913E2482D000EA2F5 /* Security.framework */,
+				D3EC808713E24824000EA2F5 /* Security.framework */,
 				D39ABE5D13CA81390078DA13 /* PDKeychainBindingsController */,
 				D39ABDF713CA80D90078DA13 /* PDKeychainBindingsControllerOSXExample */,
 				D39ABE1213CA80D90078DA13 /* PDKeychainBindingsControllerOSXExampleTests */,
@@ -365,6 +381,7 @@
 		D39ABDA513CA80B50078DA13 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "PDAgent, LLC";
 			};
 			buildConfigurationList = D39ABDA813CA80B50078DA13 /* Build configuration list for PBXProject "PDKeychainBindingsController" */;
