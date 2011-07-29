@@ -391,6 +391,7 @@
 		D39ABDA513CA80B50078DA13 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "PDAgent, LLC";
 			};
 			buildConfigurationList = D39ABDA813CA80B50078DA13 /* Build configuration list for PBXProject "PDKeychainBindingsController" */;
