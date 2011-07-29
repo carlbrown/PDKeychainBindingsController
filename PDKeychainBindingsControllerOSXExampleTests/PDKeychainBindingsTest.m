@@ -48,20 +48,20 @@
 - (void)testStandardBindingsTalksToKeychain
 {
     //Make sure it's empty
-    [[PDKeychainBindings sharedKeychainBindings] removeObjectForKey:@"testObject"];
-    STAssertNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
+    [[PDKeychainBindings sharedKeychainBindings] removeObjectForKey:@"keychainRetrievalTestObject"];
+    STAssertNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"keychainRetrievalTestObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
     //Make sure Keychain doesn't have it, either
     SecKeychainItemRef item = NULL;
     OSStatus status = SecKeychainFindGenericPassword(NULL, (uint) [[[NSBundle mainBundle] bundleIdentifier] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[[NSBundle mainBundle] bundleIdentifier] UTF8String],
-                                                     (uint) [@"testObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"testObject" UTF8String],
+                                                     (uint) [@"keychainRetrievalTestObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"keychainRetrievalTestObject" UTF8String],
                                                      NULL, NULL, &item);
     if(!status && item) {
         BOOL itemSuccesfullyClearedFromLastRun = SecKeychainItemDelete(item);
         STAssertTrue(itemSuccesfullyClearedFromLastRun, @"Failed to delete item from last run, can't continue");
     }
-
+    
     //Now set it
-    [[PDKeychainBindings sharedKeychainBindings] setObject:@"foo" forKey:@"testObject"];
+    [[PDKeychainBindings sharedKeychainBindings] setObject:@"foo" forKey:@"keychainRetrievalTestObject"];
     
     //Now make sure it got set correctly
     item = NULL;
@@ -69,7 +69,7 @@
     void *stringBuffer=NULL;
     
     status = SecKeychainFindGenericPassword(NULL, (uint) [[[NSBundle mainBundle] bundleIdentifier] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[[NSBundle mainBundle] bundleIdentifier] UTF8String],
-                                            (uint) [@"testObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"testObject" UTF8String],
+                                            (uint) [@"keychainRetrievalTestObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"keychainRetrievalTestObject" UTF8String],
                                             &stringLength, &stringBuffer, NULL);
     STAssertEquals(0, status, @"Failed to retrive data, status was '%i'", status);
     
@@ -81,9 +81,9 @@
     NSString *string = [[[NSString alloc] initWithBytes:stringBuffer length:stringLength encoding:NSUTF8StringEncoding] autorelease];
     STAssertEqualObjects(string, @"foo", @"retrieved string from keychain '%@' not equal to expected 'foo'", string);
     SecKeychainItemFreeAttributesAndData(NULL, stringBuffer);
-
-    STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
-    STAssertEquals(@"foo", [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"Did not retrieve object correctly");
+    
+    STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"keychainRetrievalTestObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
+    STAssertEquals(@"foo", [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"keychainRetrievalTestObject"], @"Did not retrieve object correctly");
 }
 
 @end
