@@ -65,7 +65,6 @@ static PDKeychainBindingsController *sharedInstance = nil;
 	if (!string)  {
 		//Need to delete the Key 
 #if TARGET_OS_IPHONE
-        NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *spec = [NSDictionary dictionaryWithObjectsAndKeys:(id)kSecClassGenericPassword, kSecClass,
                               key, kSecAttrAccount,[self serviceName], kSecAttrService, nil];
         
