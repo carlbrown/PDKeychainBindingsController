@@ -55,27 +55,35 @@
     OSStatus status = SecKeychainFindGenericPassword(NULL, (uint) [[[NSBundle mainBundle] bundleIdentifier] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[[NSBundle mainBundle] bundleIdentifier] UTF8String],
                                                      (uint) [@"testObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"testObject" UTF8String],
                                                      NULL, NULL, &item);
-    if(!status && item) SecKeychainItemDelete(item);
+    if(!status && item) {
+        BOOL itemSuccesfullyClearedFromLastRun = SecKeychainItemDelete(item);
+        STAssertTrue(itemSuccesfullyClearedFromLastRun, @"Failed to delete item from last run, can't continue");
+    }
 
     //Now set it
     [[PDKeychainBindings sharedKeychainBindings] setObject:@"foo" forKey:@"testObject"];
     
     //Now make sure it got set correctly
-    STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
-    STAssertEquals(@"foo", [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"Did not retrieve object correctly");
     item = NULL;
+    UInt32 stringLength=0;
+    void *stringBuffer=NULL;
+    
     status = SecKeychainFindGenericPassword(NULL, (uint) [[[NSBundle mainBundle] bundleIdentifier] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[[NSBundle mainBundle] bundleIdentifier] UTF8String],
                                             (uint) [@"testObject" lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [@"testObject" UTF8String],
-                                            NULL, NULL, &item);
-    UInt32 stringLength;
-    void *stringBuffer;
+                                            &stringLength, &stringBuffer, NULL);
+    STAssertEquals(0, status, @"Failed to retrive data, status was '%i'", status);
     
-    status = SecKeychainItemCopyAttributesAndData(item, NULL, NULL, NULL, &stringLength, &stringBuffer);
-    STAssertFalse(status, @"Failed to retrive data, status was true");
+    if (status) {
+        CFStringRef errorMsg= SecCopyErrorMessageString(status, NULL);
+        NSLog(@"Error copying Keychain item: %@",errorMsg);
+        CFRelease(errorMsg);
+    }
     NSString *string = [[[NSString alloc] initWithBytes:stringBuffer length:stringLength encoding:NSUTF8StringEncoding] autorelease];
-    STAssertEqualObjects(string, @"testObject", @"retrieved string from keychain '%@' not equal to expected 'testObject'", string);
+    STAssertEqualObjects(string, @"foo", @"retrieved string from keychain '%@' not equal to expected 'foo'", string);
     SecKeychainItemFreeAttributesAndData(NULL, stringBuffer);
 
+    STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
+    STAssertEquals(@"foo", [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"Did not retrieve object correctly");
 }
 
 @end
