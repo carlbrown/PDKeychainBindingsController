@@ -181,18 +181,12 @@ static PDKeychainBindingsController *sharedInstance = nil;
 #pragma mark -
 #pragma mark Business Logic
 
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *) context {	
-    NSLog(@"Observed change"); //Just for debugging
-}
-
 - (PDKeychainBindings *) keychainBindings {
     if (_keychainBindings == nil) {
         _keychainBindings = [[PDKeychainBindings alloc] init]; 
     }
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
-        [self addObserver:self forKeyPath:@"values.testObject" options:0 context:NULL];
     }
     return _keychainBindings;
 }
@@ -200,13 +194,11 @@ static PDKeychainBindingsController *sharedInstance = nil;
 -(id) values {
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
-        [self addObserver:self forKeyPath:@"values.testObject" options:0 context:NULL];
     }
     return _valueBuffer;
 }
 
 - (id)valueForKeyPath:(NSString *)keyPath {
-    NSLog(@"valueForKeyPath called for keyPath '%@'",keyPath);
     //I *think* we only need to override the keyPath variants
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
@@ -225,22 +217,21 @@ static PDKeychainBindingsController *sharedInstance = nil;
 }
 
 - (id)valueForKey:(NSString *)key {
-    NSLog(@"valueForKey called for key '%@'",key);
+    NSLog(@"valueForKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
     return [super valueForKey:key];
 }
 
 - (id)valueForUndefinedKey:(NSString *)key {
-    NSLog(@"valueForUndefinedKey called for key '%@'",key);
+    NSLog(@"valueForUndefinedKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
     return [super valueForUndefinedKey:key];
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key {
-    NSLog(@"setValueForKey called with value '%@'for key '%@'",value,key);
+    NSLog(@"setValueForKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
     [super setValue:value forKey:key];
 }
 
 - (void)setValue:(id)value forKeyPath:(NSString *)keyPath {
-    NSLog(@"setValueForKeyPath called with value '%@'for key '%@'",value,keyPath);
     //I *think* we only need to override the keyPath variants
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
@@ -265,12 +256,12 @@ static PDKeychainBindingsController *sharedInstance = nil;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    NSLog(@"setValueForUndefinedKey called with value '%@'for key '%@'",value,key);
+    NSLog(@"setValueForUndefinedKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
     [super setValue:value forUndefinedKey:key];
 }
 
 - (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues {
-    NSLog(@"setValuesForKeysWithDictionary called");
+    NSLog(@"setValuesForKeysWithDictionary called, but not overridden in this class - this is probably bad, and should be reported to the author");
     [super setValuesForKeysWithDictionary:keyedValues];
 }
 

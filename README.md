@@ -17,11 +17,9 @@ You should be able to call
 
 > [PDKeychainBindings sharedKeychainBindings]
 
-I'm not sure how exhaustive I'm going to make the implementation, although we'll see.
+There are a couple of differences between the implemenations.  First, this class is only valid for strings, because that's what the Keychain accepts, so the methods that take non-string objects (like arrays and dictionaries and the like) have been omitted from the class.  Secondly, right now, only "immediate mode" is implemented, so you can't set a bunch of values and then call "save" to do only one write, and there's no "revert to saved values" functionality (this wouldn't be hard to implement, although I don't have a need for it right now, so if you want it, ping me and I'll put it in).
 
 As background, I'm writing a Mac App that has a NSSecureTextField in its Preferences window.  I want the value that the user enters there to be stored in the Keychain, but to simplify the code, I want to be able to bind it the same way I'm binding all the non-secure preferences to NSUserDefaultsController.
 
 I thought this class would potentially be useful to other people, so I'm making it its own module for release under an MIT license.
 
-
-**WARNING**: This code still has a lot of debugging info in it, so if you don't want passwords to be printed to the console, take the NSLog's out. (I'm working on cleaning it up)
