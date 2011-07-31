@@ -199,7 +199,6 @@ static PDKeychainBindingsController *sharedInstance = nil;
 }
 
 - (id)valueForKeyPath:(NSString *)keyPath {
-    //I *think* we only need to override the keyPath variants
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
         //This is a values keyPath, so we need to check the keychain
@@ -216,23 +215,8 @@ static PDKeychainBindingsController *sharedInstance = nil;
     return [super valueForKeyPath:keyPath];
 }
 
-- (id)valueForKey:(NSString *)key {
-    NSLog(@"valueForKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
-    return [super valueForKey:key];
-}
-
-- (id)valueForUndefinedKey:(NSString *)key {
-    NSLog(@"valueForUndefinedKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
-    return [super valueForUndefinedKey:key];
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key {
-    NSLog(@"setValueForKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
-    [super setValue:value forKey:key];
-}
 
 - (void)setValue:(id)value forKeyPath:(NSString *)keyPath {
-    //I *think* we only need to override the keyPath variants
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
         //This is a values keyPath, so we need to check the keychain
@@ -253,16 +237,6 @@ static PDKeychainBindingsController *sharedInstance = nil;
         }
     } 
     [super setValue:value forKeyPath:keyPath];
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    NSLog(@"setValueForUndefinedKey called for key '%@', but not overridden in this class - this is probably bad, and should be reported to the author",key);
-    [super setValue:value forUndefinedKey:key];
-}
-
-- (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues {
-    NSLog(@"setValuesForKeysWithDictionary called, but not overridden in this class - this is probably bad, and should be reported to the author");
-    [super setValuesForKeysWithDictionary:keyedValues];
 }
 
 @end
