@@ -1,7 +1,6 @@
+This project is intended to make using the Mac OSX and iOS Keychains as easy as NSUserDefaults.
 
-This project is intended to be a KVO-compliant Cocoa wrapper around the  Mac OSX and iOS Keychains.
-
-The model for this wrapper is NSUserDefaults, so the intent is that for the common cases you would normally want to call:
+It is a KVO-compliant Cocoa wrapper around the  Mac OSX and iOS Keychains, and the model for this wrapper is NSUserDefaults, so the intent is that for the common cases you would normally want to call:
 
 > [NSUserDefaultsController sharedUserDefaultsController]
 
