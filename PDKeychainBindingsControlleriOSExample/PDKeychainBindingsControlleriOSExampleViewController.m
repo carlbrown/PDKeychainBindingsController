@@ -49,9 +49,6 @@
     revealButton = nil;
     [retrievedLabel release];
     retrievedLabel = nil;
-    [self setPasswordField:nil];
-    [self setRevealButton:nil];
-    [self setRetrievedLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
