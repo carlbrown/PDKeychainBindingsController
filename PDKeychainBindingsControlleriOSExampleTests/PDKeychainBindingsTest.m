@@ -15,9 +15,9 @@
 - (NSString*) stringWithUUID {
     CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
     //get the string representation of the UUID
-    NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    NSString	*uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuidObj);
     CFRelease(uuidObj);
-    return [uuidString autorelease];
+    return uuidString;
 }
 
 #if USE_APPLICATION_UNIT_TEST     // all code under test is in the iPhone Application
@@ -60,11 +60,11 @@
                            nil];
 	
     CFDataRef stringData = NULL;
-    OSStatus status = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef*)&stringData);
+    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef*)&stringData);
     
     STAssertEquals((uint) 0, (uint) status, @"Failed to retrive data, status was '%i'", status);
     
-    NSString *string = [[[NSString alloc] initWithData:(id)stringData encoding:NSUTF8StringEncoding] autorelease];
+    NSString *string = [[NSString alloc] initWithData:(__bridge id)stringData encoding:NSUTF8StringEncoding];
     STAssertEqualObjects(string, targetString, @"retrieved string from keychain '%@' not equal to expected 'foo'", string);
     CFRelease(stringData);
     

@@ -8,24 +8,8 @@
 
 #import "TestContainerClass.h"
 
-
 @implementation TestContainerClass
 
 @synthesize value;
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 @end

@@ -15,9 +15,9 @@
 - (NSString*) stringWithUUID {
     CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
     //get the string representation of the UUID
-    NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    NSString	*uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuidObj);
     CFRelease(uuidObj);
-    return [uuidString autorelease];
+    return uuidString;
 }
 
 - (void)setUp
@@ -79,7 +79,7 @@
         NSLog(@"Error copying Keychain item: %@",errorMsg);
         CFRelease(errorMsg);
     }
-    NSString *string = [[[NSString alloc] initWithBytes:stringBuffer length:stringLength encoding:NSUTF8StringEncoding] autorelease];
+    NSString *string = [[NSString alloc] initWithBytes:stringBuffer length:stringLength encoding:NSUTF8StringEncoding];
     STAssertEqualObjects(string, targetString, @"retrieved string from keychain '%@' not equal to expected 'foo'", string);
     SecKeychainItemFreeAttributesAndData(NULL, stringBuffer);
     
