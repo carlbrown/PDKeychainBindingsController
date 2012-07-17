@@ -8,18 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PDKeychainBindingsControllerOSXExampleAppDelegate : NSObject <NSApplicationDelegate> {
-@private
-    NSWindow *window;
-    NSTextField *RevealLabel;
-    NSSecureTextField *passwordField;
-    NSButton *RevealConcealButton;
-}
+@interface PDKeychainBindingsControllerOSXExampleAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSTextField *RevealLabel;
-@property (assign) IBOutlet NSSecureTextField *passwordField;
-@property (assign) IBOutlet NSButton *RevealConcealButton;
+@property (strong) IBOutlet NSWindow *window;
+@property (strong) IBOutlet NSTextField *RevealLabel;
+@property (strong) IBOutlet NSSecureTextField *passwordField;
+@property (strong) IBOutlet NSButton *RevealConcealButton;
 - (IBAction)toggleRevealConceal:(id)sender;
 
 @end

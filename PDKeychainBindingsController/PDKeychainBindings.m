@@ -9,29 +9,11 @@
 #import "PDKeychainBindings.h"
 #import "PDKeychainBindingsController.h"
 
-
 @implementation PDKeychainBindings
-
-
 
 + (PDKeychainBindings *)sharedKeychainBindings
 {
 	return [[PDKeychainBindingsController sharedKeychainBindingsController] keychainBindings];
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (id)objectForKey:(NSString *)defaultName {
@@ -50,7 +32,6 @@
 - (void)removeObjectForKey:(NSString *)defaultName {
     [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:nil forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
-
 
 - (NSString *)stringForKey:(NSString *)defaultName {
     return (NSString *) [self objectForKey:defaultName];

@@ -8,15 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PDKeychainBindingsControlleriOSExampleViewController : UIViewController <UITextFieldDelegate>{
-    
-    UITextField *passwordField;
-    UIButton *revealButton;
-    UILabel *retrievedLabel;
-}
-@property (nonatomic, retain) IBOutlet UITextField *passwordField;
-@property (nonatomic, retain) IBOutlet UIButton *revealButton;
-@property (nonatomic, retain) IBOutlet UILabel *retrievedLabel;
+@interface PDKeychainBindingsControlleriOSExampleViewController : UIViewController <UITextFieldDelegate>
+
+@property (nonatomic) IBOutlet UITextField *passwordField;
+@property (nonatomic) IBOutlet UIButton *revealButton;
+@property (nonatomic) IBOutlet UILabel *retrievedLabel;
 
 - (IBAction)toggleReveal:(id)sender;
 

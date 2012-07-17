@@ -14,13 +14,6 @@
 @synthesize passwordField;
 @synthesize revealButton;
 
-- (void)dealloc
-{
-    [passwordField release];
-    [revealButton release];
-    [retrievedLabel release];
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -43,11 +36,8 @@
 
 - (void)viewDidUnload
 {
-    [passwordField release];
     passwordField = nil;
-    [revealButton release];
     revealButton = nil;
-    [retrievedLabel release];
     retrievedLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
