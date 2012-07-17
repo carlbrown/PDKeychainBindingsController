@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@interface TestContainerClass : NSObject
 
-@interface TestContainerClass : NSObject {
-@private
-    NSString *value;
-}
-
-@property (assign) NSString *value;
+@property (strong) NSString *value;
 @end

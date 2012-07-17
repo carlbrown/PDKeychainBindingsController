@@ -10,12 +10,10 @@
 
 @class PDKeychainBindingsControlleriOSExampleViewController;
 
-@interface PDKeychainBindingsControlleriOSExampleAppDelegate : NSObject <UIApplicationDelegate> {
+@interface PDKeychainBindingsControlleriOSExampleAppDelegate : NSObject <UIApplicationDelegate>
 
-}
+@property (nonatomic) IBOutlet UIWindow *window;
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-
-@property (nonatomic, retain) IBOutlet PDKeychainBindingsControlleriOSExampleViewController *viewController;
+@property (nonatomic) IBOutlet PDKeychainBindingsControlleriOSExampleViewController *viewController;
 
 @end
