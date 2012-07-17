@@ -22,3 +22,5 @@ As background, I'm writing a Mac App that has a NSSecureTextField in its Prefere
 
 I thought this class would potentially be useful to other people, so I'm making it its own module for release under an MIT license.
 
+NOTE: The master branch has been updated to use ARC by [Vincent Tourraine](https://github.com/vtourraine) (Thanks, Vincent).  I'll be maintaining a non ARC branch called [non_ARC](https://github.com/carlbrown/PDKeychainBindingsController/tree/non_ARC) so it can still be used in projects that haven't been converted to ARC, yet.
+
