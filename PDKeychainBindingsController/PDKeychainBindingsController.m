@@ -124,38 +124,13 @@ static PDKeychainBindingsController *sharedInstance = nil;
 
 + (PDKeychainBindingsController *)sharedKeychainBindingsController 
 {
-	@synchronized (self) {
-		if (sharedInstance == nil) {
-			[[self alloc] init]; // assignment not done here, see allocWithZone
-		}
-	}
-	
-	return sharedInstance;   
-}
+    static dispatch_once_t onceQueue;
 
-+ (id)allocWithZone:(NSZone *)zone
-{
-    @synchronized(self) {
-        if (sharedInstance == nil) {
-            sharedInstance = [super allocWithZone:zone];
-            return sharedInstance;  // assignment and return on first allocation
-        }
-    }
-	
-    return nil; //on subsequent allocation attempts return nil
-}
+    dispatch_once(&onceQueue, ^{
+        sharedInstance = [[self alloc] init];
+    });
 
-- (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-- (id)init
-{
-	@synchronized(self) {
-		self = [super init];	
-		return self;
-	}
+	return sharedInstance;
 }
 
 #pragma mark -
