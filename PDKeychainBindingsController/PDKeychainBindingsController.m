@@ -126,7 +126,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
 {
 	@synchronized (self) {
 		if (sharedInstance == nil) {
-			[[self alloc] init]; // assignment not done here, see allocWithZone
+			__unused id unused = [[self alloc] init]; // assignment not done here, see allocWithZone
 		}
 	}
 	
