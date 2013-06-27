@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'PDKeychainBindingsController'
-  s.version      = '0.0.1'
+  s.version      = '1.0.0'
   s.summary      = 'OS X and iOS Keychain Access patterned after NSUserDefaults.'
   s.author = {
     'Carl Brown' => 'carlb@pdagent.com'
