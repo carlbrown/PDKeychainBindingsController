@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = 'PDKeychainBindingsController'
-  s.version      = '0.0.1'
+  s.version      = '1.0.0'
   s.summary      = 'OS X and iOS Keychain Access patterned after NSUserDefaults.'
   s.author = {
     'Carl Brown' => 'carlb@pdagent.com'
   }
-  s.license = {
-  :text => <<-LICENSE
+  s.homepage     = "http://www.escortmissions.com/blog/2011/9/3/steal-this-code-and-protect-their-data-simplifying-keychain.html"
+  s.license = { :type => 'MIT', :text => <<-LICENSE
 			  Copyright (C) 2010-2011 by Carl Brown of PDAgent, LLC.
 
 			Permission is hereby granted, free of charge, to any person obtaining a copy
