@@ -24,6 +24,6 @@
 - (NSString*)stringForKey:(NSString*)key;
 - (BOOL)storeString:(NSString*)string forKey:(NSString*)key;
 - (BOOL)storeString:(NSString*)string forKey:(NSString*)key accessibleAttribute:(CFTypeRef)accessibleAttribute;
-
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath accessibleAttribute:(CFTypeRef)accessibleAttribute;
 @end
 
