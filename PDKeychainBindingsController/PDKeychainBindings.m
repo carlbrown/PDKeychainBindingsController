@@ -29,9 +29,12 @@
     [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:value forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName] accessibleAttribute:accessibleAttribute];
 }
 
-
 - (void)setString:(NSString *)value forKey:(NSString *)defaultName {
     [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:value forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
+}
+
+- (void)setString:(NSString *)value forKey:(NSString *)defaultName accessibleAttribute:(CFTypeRef)accessibleAttribute {
+    [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:value forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName] accessibleAttribute:accessibleAttribute];
 }
 
 - (void)removeObjectForKey:(NSString *)defaultName {
