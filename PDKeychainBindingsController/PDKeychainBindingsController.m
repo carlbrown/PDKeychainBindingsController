@@ -62,6 +62,10 @@ static PDKeychainBindingsController *sharedInstance = nil;
 
 
 - (BOOL)storeString:(NSString*)string forKey:(NSString*)key {
+    return [self storeString:string forKey:key accessibleAttribute:kSecAttrAccessibleWhenUnlocked];
+}
+
+- (BOOL)storeString:(NSString*)string forKey:(NSString*)key accessibleAttribute:(CFTypeRef)accessibleAttribute {
 	if (!string)  {
 		//Need to delete the Key 
 #if TARGET_OS_IPHONE
@@ -87,11 +91,17 @@ static PDKeychainBindingsController *sharedInstance = nil;
         if(!string) {
             return !SecItemDelete((__bridge CFDictionaryRef)spec);
         }else if([self stringForKey:key]) {
-            NSDictionary *update = [NSDictionary dictionaryWithObject:stringData forKey:(__bridge id)kSecValueData];
+            NSDictionary *update = @{
+                                     (__bridge id)kSecAttrAccessible:(__bridge id)accessibleAttribute,
+                                     (__bridge id)kSecValueData:stringData
+                                     };
+            
+            
             return !SecItemUpdate((__bridge CFDictionaryRef)spec, (__bridge CFDictionaryRef)update);
         }else{
             NSMutableDictionary *data = [NSMutableDictionary dictionaryWithDictionary:spec];
-            [data setObject:stringData forKey:(__bridge id)kSecValueData];
+            data[(__bridge id)kSecValueData] = stringData;
+            data[(__bridge id)kSecAttrAccessible] =(__bridge id)accessibleAttribute;
             return !SecItemAdd((__bridge CFDictionaryRef)data, NULL);
         }
 #else //OSX
