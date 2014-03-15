@@ -24,3 +24,4 @@ I thought this class would potentially be useful to other people, so I'm making 
 
 NOTE: The master branch has been updated to use ARC by [Vincent Tourraine](https://github.com/vtourraine) (Thanks, Vincent).  I'll be maintaining a non ARC branch called [non_ARC](https://github.com/carlbrown/PDKeychainBindingsController/tree/non_ARC) so it can still be used in projects that haven't been converted to ARC, yet.
 
+Note that there's an issue with the unit tests running on the device failing due to a change in code signing entitlements.  See [this stack overflow answer](http://stackoverflow.com/a/22305193/159356) for more information if you're trying to run the unit tests on the device.
