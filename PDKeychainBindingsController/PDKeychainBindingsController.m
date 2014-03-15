@@ -72,7 +72,11 @@ static PDKeychainBindingsController *sharedInstance = nil;
         NSDictionary *spec = [NSDictionary dictionaryWithObjectsAndKeys:(__bridge id)kSecClassGenericPassword, kSecClass,
                               key, kSecAttrAccount,[self serviceName], kSecAttrService, nil];
         
-        return !SecItemDelete((__bridge CFDictionaryRef)spec);
+        OSStatus result=SecItemDelete((__bridge CFDictionaryRef)spec);
+        if (result!=0) {
+            NSLog(@"Could not store(Delete) string. Error was:%i",(int)result);
+        }
+        return !result;
 #else //OSX
         SecKeychainItemRef item = NULL;
         OSStatus status = SecKeychainFindGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
@@ -89,20 +93,31 @@ static PDKeychainBindingsController *sharedInstance = nil;
                               key, kSecAttrAccount,[self serviceName], kSecAttrService, nil];
         
         if(!string) {
-            return !SecItemDelete((__bridge CFDictionaryRef)spec);
+            OSStatus result=SecItemDelete((__bridge CFDictionaryRef)spec);
+            if (result!=0) {
+                NSLog(@"Could not store(Delete) string. Error was:%i",(int)result);
+            }
+            return !result;
         }else if([self stringForKey:key]) {
             NSDictionary *update = @{
                                      (__bridge id)kSecAttrAccessible:(__bridge id)accessibleAttribute,
                                      (__bridge id)kSecValueData:stringData
                                      };
             
-            
-            return !SecItemUpdate((__bridge CFDictionaryRef)spec, (__bridge CFDictionaryRef)update);
+            OSStatus result=SecItemUpdate((__bridge CFDictionaryRef)spec, (__bridge CFDictionaryRef)update);
+            if (result!=0) {
+                NSLog(@"Could not store(Update) string. Error was:%i",(int)result);
+            }
+return !result;
         }else{
             NSMutableDictionary *data = [NSMutableDictionary dictionaryWithDictionary:spec];
             data[(__bridge id)kSecValueData] = stringData;
             data[(__bridge id)kSecAttrAccessible] =(__bridge id)accessibleAttribute;
-            return !SecItemAdd((__bridge CFDictionaryRef)data, NULL);
+            OSStatus result=SecItemAdd((__bridge CFDictionaryRef)data, NULL);
+            if (result!=0) {
+                NSLog(@"Could not store(Add) string. Error was:%i",(int)result);
+            }
+            return !result;
         }
 #else //OSX
         SecKeychainItemRef item = NULL;

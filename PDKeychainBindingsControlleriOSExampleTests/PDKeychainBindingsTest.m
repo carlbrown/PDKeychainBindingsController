@@ -66,7 +66,6 @@
     
     NSString *string = [[NSString alloc] initWithData:(__bridge id)stringData encoding:NSUTF8StringEncoding];
     STAssertEqualObjects(string, targetString, @"retrieved string from keychain '%@' not equal to expected 'foo'", string);
-    CFRelease(stringData);
     
     STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"keychainRetrievalTestObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");
     STAssertEquals(targetString, [[PDKeychainBindings sharedKeychainBindings] objectForKey:@"keychainRetrievalTestObject"], @"Did not retrieve object correctly");
