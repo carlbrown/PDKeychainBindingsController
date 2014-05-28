@@ -40,4 +40,5 @@
         [RevealConcealButton setTitle:@"Reveal"];
     }
 }
+
 @end

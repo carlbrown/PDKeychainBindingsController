@@ -20,7 +20,111 @@
 
 static PDKeychainBindingsController *sharedInstance = nil;
 
+#if !TARGET_OS_IPHONE
+@interface PDKeychainBindingsController () {
+	SecKeychainRef		_secKeychainRef;
+}
+@end
+#endif
+
 @implementation PDKeychainBindingsController
+
+#pragma mark -
+#pragma mark External Keychain Access (OSX)
+
+#if !TARGET_OS_IPHONE
+
+- (NSError*)NSErrorFromOSStatus:(OSStatus)status
+{
+	// get error description
+	NSString *description = (__bridge_transfer NSString*)SecCopyErrorMessageString(status, NULL);
+	return [NSError errorWithDomain:NSOSStatusErrorDomain
+							   code:status
+						   userInfo:@{ NSLocalizedDescriptionKey : description}];
+}
+
+- (void)useDefaultKeychain
+{
+	if( _secKeychainRef ) {
+		SecKeychainLock(_secKeychainRef);
+		CFRelease(_secKeychainRef);
+		_secKeychainRef = NULL;
+	}
+}
+
+- (BOOL)useExternalKeychainFileWithPath:(NSString*)path password:(NSString*)password error:(NSError**)error
+{
+	if( _secKeychainRef ) {
+		SecKeychainLock(_secKeychainRef);
+		// free current keychainRef
+		CFRelease(_secKeychainRef);
+	}
+	
+	OSStatus status;
+	
+	// open existing keychain
+	status = SecKeychainOpen([path fileSystemRepresentation], &_secKeychainRef);
+	if( status != errSecSuccess ) {
+		goto handleError;
+	}
+	
+	status = SecKeychainUnlock(_secKeychainRef, (UInt32)password.length, [password UTF8String], TRUE );
+	if( status == errSecSuccess ) {
+		return YES;
+	}
+	if( status == errSecNoSuchKeychain ) {
+		// create new keychain
+		status = SecKeychainCreate([path fileSystemRepresentation]
+							   , (UInt32)password.length
+							   , [password UTF8String]
+							   , FALSE
+							   , NULL
+							   , &_secKeychainRef );
+	
+		if( status != errSecSuccess ) {
+			goto handleError;
+		}
+		
+		return YES;
+	}
+	
+handleError:
+	if( error ) {
+		*error = [self NSErrorFromOSStatus:status];
+	}
+	
+	return NO;
+}
+
+- (BOOL)removeExternalKeychainFileWithError:(NSError**)error
+{
+	if( _secKeychainRef ) {
+		OSStatus status = SecKeychainDelete(_secKeychainRef);
+		if( status != errSecSuccess ) {
+			if( error ) {
+				*error = [self NSErrorFromOSStatus:status];
+			}
+			return NO;
+		}
+	} else {
+		return NO;
+	}
+	
+	_secKeychainRef = NULL;
+	
+	return YES;
+}
+
+- (void)dealloc
+{
+	// release
+	if( _secKeychainRef ) {
+		SecKeychainLock(_secKeychainRef);
+		CFRelease(_secKeychainRef);
+	}
+}
+
+#endif
 
 #pragma mark -
 #pragma mark Keychain Access
@@ -44,7 +148,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
     //SecKeychainItemRef item = NULL;
     UInt32 stringLength;
     void *stringBuffer;
-    status = SecKeychainFindGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
+    status = SecKeychainFindGenericPassword(_secKeychainRef, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
                                             (uint) [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [key UTF8String],
                                             &stringLength, &stringBuffer, NULL);
     #endif
@@ -79,7 +183,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
         return !result;
 #else //OSX
         SecKeychainItemRef item = NULL;
-        OSStatus status = SecKeychainFindGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
+        OSStatus status = SecKeychainFindGenericPassword(_secKeychainRef, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
                                                          (uint) [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [key UTF8String],
                                                          NULL, NULL, &item);
         if(status) return YES;
@@ -121,12 +225,12 @@ return !result;
         }
 #else //OSX
         SecKeychainItemRef item = NULL;
-        OSStatus status = SecKeychainFindGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
+        OSStatus status = SecKeychainFindGenericPassword(_secKeychainRef, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
                                                          (uint) [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [key UTF8String],
                                                          NULL, NULL, &item);
         if(status) {
             //NO such item. Need to add it
-            return !SecKeychainAddGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
+            return !SecKeychainAddGenericPassword(_secKeychainRef, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
                                                   (uint) [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [key UTF8String],
                                                   (uint) [string lengthOfBytesUsingEncoding:NSUTF8StringEncoding],[string UTF8String],
                                                   NULL);
@@ -136,7 +240,7 @@ return !result;
             return !SecKeychainItemModifyAttributesAndData(item, NULL, (uint) [string lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [string UTF8String]);
         
         else
-            return !SecKeychainAddGenericPassword(NULL, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
+            return !SecKeychainAddGenericPassword(_secKeychainRef, (uint) [[self serviceName] lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [[self serviceName] UTF8String],
                                                   (uint) [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding], [key UTF8String],
                                                   (uint) [string lengthOfBytesUsingEncoding:NSUTF8StringEncoding],[string UTF8String],
                                                   NULL);
