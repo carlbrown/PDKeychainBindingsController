@@ -19,6 +19,13 @@
 + (PDKeychainBindingsController *)sharedKeychainBindingsController;
 - (PDKeychainBindings *) keychainBindings;
 
+// Only for OSX
+#if !TARGET_OS_IPHONE
+- (BOOL)useExternalKeychainFileWithPath:(NSString*)path password:(NSString*)password error:(NSError**)error;
+- (void)useDefaultKeychain;
+- (BOOL)removeExternalKeychainFileWithError:(NSError**)error;
+#endif
+
 - (id)values;    // accessor object for PDKeychainBindings values. This property is observable using key-value observing.
 
 - (NSString*)stringForKey:(NSString*)key;

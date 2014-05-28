@@ -60,6 +60,36 @@
 
 }
 
+- (void)testExternalKeychain
+{
+    PDKeychainBindingsController *controller = [PDKeychainBindingsController sharedKeychainBindingsController];
+	
+	NSString *path = [[[NSBundle bundleForClass:[self class]] bundlePath] stringByAppendingPathComponent:@"test.keychain"];
+	NSError *error;
+	
+	// creating test
+	[[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+	
+	BOOL success = [controller useExternalKeychainFileWithPath:path password:@"password"  error:&error];
+	STAssertTrue(success, error.localizedDescription );
+	
+	[self testStandardBindingsExists];
+	[self testStandardBindingsControllerSetRetrieval];
+	
+	// existing keychain
+	success = [controller useExternalKeychainFileWithPath:path password:@"password" error:&error];
+	STAssertTrue(success, error.localizedDescription );
+	
+	[self testStandardBindingsExists];
+	[self testStandardBindingsControllerSetRetrieval];
+	
+	// delete keychain
+	success = [controller removeExternalKeychainFileWithError:&error];
+	STAssertTrue(success, error.localizedDescription );
+
+	[controller useDefaultKeychain];
+}
+
 /*
  Commenting these out, because bindings, although seemingly working in the UI, aren't working inside the unit tests.
 
