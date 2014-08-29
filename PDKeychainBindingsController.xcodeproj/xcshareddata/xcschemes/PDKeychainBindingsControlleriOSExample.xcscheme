@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+   LastUpgradeVersion = "0510"
    version = "1.8">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D39ABE2613CA81090078DA13"
                BuildableName = "PDKeychainBindingsControlleriOSExample.app"
-               BlueprintName = "PDKeychainBindingsControlleriOSExample"
+               BlueprintName = "PDKeychainBCiOSExample"
                ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,7 +34,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D39ABE4513CA81090078DA13"
                BuildableName = "PDKeychainBindingsControlleriOSExampleTests.octest"
-               BlueprintName = "PDKeychainBindingsControlleriOSExampleTests"
+               BlueprintName = "PDKeychainBCiOSTests"
                ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -55,7 +56,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D39ABE2613CA81090078DA13"
             BuildableName = "PDKeychainBindingsControlleriOSExample.app"
-            BlueprintName = "PDKeychainBindingsControlleriOSExample"
+            BlueprintName = "PDKeychainBCiOSExample"
             ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -75,7 +76,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D39ABE2613CA81090078DA13"
             BuildableName = "PDKeychainBindingsControlleriOSExample.app"
-            BlueprintName = "PDKeychainBindingsControlleriOSExample"
+            BlueprintName = "PDKeychainBCiOSExample"
             ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

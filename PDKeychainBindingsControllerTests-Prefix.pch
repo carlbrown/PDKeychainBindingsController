@@ -1,0 +1,23 @@
+
+/*! Prefix header for all Test Targets */
+
+#ifdef __OBJC__
+
+  #if !TARGET_OS_IPHONE
+
+  #import <AppKit/AppKit.h>
+
+  NS_INLINE NSString* UUIDString (){   //create a new UUID & get the string representation of the UUID
+
+    CFUUIDRef	     uuidObj = CFUUIDCreate(nil);
+    NSString	* uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuidObj);
+    return CFRelease(uuidObj), uuidString;
+  }
+
+  #else
+    #import <UIKit/UIKit.h>
+  #endif
+
+  #import <SenTestingKit/SenTestingKit.h>
+
+#endif
