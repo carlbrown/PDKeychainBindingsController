@@ -1,10 +1,9 @@
-//
-//  PDKeychainBindings.m
-//  PDKeychainBindings
-//
-//  Created by Carl Brown on 7/10/11.
-//  Copyright 2011 PDAgent, LLC. Released under MIT License.
-//
+
+/*! @file       PDKeychainBindings.m
+    @class      PDKeychainBindings
+    @author     Carl Brown @since 7/10/11.
+    @copyright  2011 PDAgent, LLC. Released under MIT License.
+*/
 
 #import "PDKeychainBindings.h"
 #import "PDKeychainBindingsController.h"
@@ -18,15 +17,16 @@
 
 - objectForKey:(NSString*)defaultName
 {
-  //return [[[PDKeychainBindingsController sharedKeychainBindingsController] valueBuffer] objectForKey:defaultName];
-  return [PDKeychainBindingsController.sharedKeychainBindingsController valueForKeyPath:
-                                                             [NSString stringWithFormat:@"values.%@",defaultName]];
+  //return PDKeychainBindingsController.sharedKeychainBindingsController.valueBuffer[defaultName];
+
+  return [PDKeychainBindingsController.sharedKeychainBindingsController
+   valueForKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
 - (void)setObject:(NSString *)value forKey:(NSString *)defaultName
 {
   [PDKeychainBindingsController.sharedKeychainBindingsController setValue:value
-                                    forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
+               forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
 - (void)setObject:(NSString *)value forKey:(NSString *)defaultName accessibleAttribute:(CFTypeRef)accessibleAttribute

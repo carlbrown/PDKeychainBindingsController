@@ -1,10 +1,9 @@
-//
-//  PDKeychainBindingsController.h
-//  PDKeychainBindingsController
-//
-//  Created by Carl Brown on 7/10/11.
-//  Copyright 2011 PDAgent, LLC. Released under MIT License.
-//
+
+/*! @file       PDKeychainBindingsController.h
+    @class      PDKeychainBindingsController
+    @author     Carl Brown @since 7/10/11.
+    @copyright  2011 PDAgent, LLC. Released under MIT License.
+*/
 
 #import "PDKeychainBindings.h"
 

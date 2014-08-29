@@ -1,6 +1,5 @@
-//
-// Prefix header for all source files of the 'PDKeychainBindingsControllerOSXExampleTests' target in the 'PDKeychainBindingsControllerOSXExampleTests' project
-//
+
+/*! Prefix header for all Test Targets */
 
 #ifdef __OBJC__
 
