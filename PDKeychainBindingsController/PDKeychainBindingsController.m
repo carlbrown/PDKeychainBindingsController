@@ -1,41 +1,44 @@
-//
-//  PDKeychainBindingsController.m
-//  PDKeychainBindingsController
-//
-//  Created by Carl Brown on 7/10/11.
-//  Copyright 2011 PDAgent, LLC. Released under MIT License.
-//
 
-//  There's (understandably) a lot of controversy about how (and whether)
-//   to use the Singleton pattern for Cocoa.  I am here because I'm 
-//   trying to emulate existing Singleton (NSUserDefaults) behavior
-//
-//   and I'm using the singleton methodology from
-//   http://www.duckrowing.com/2010/05/21/using-the-singleton-pattern-in-objective-c/
-//   because it seemed reasonable
-
+/*! @file       PDKeychainBindingsController.m
+    @class      PDKeychainBindingsController
+    @author     Carl Brown @since 7/10/11.
+    @copyright  2011 PDAgent, LLC. Released under MIT License.
+*/
 
 #import "PDKeychainBindingsController.h"
 #import <Security/Security.h>
 
+@implementation PDKeychainBindingsController {
+#if !TARGET_OS_IPHONE
+	     SecKeychainRef		_secKeychainRef;
+#endif
+  @private
+  NSMutableDictionary *_valueBuffer;
+}
+
+#pragma mark - Singleton Stuff
+
+/*
+  @note There's (understandably) a lot of controversy about how (and whether) to use the Singleton pattern for Cocoa.  I am here because I'm  trying to emulate existing Singleton (NSUserDefaults) behavior and I'm using the singleton methodology from @link  http://www.duckrowing.com/2010/05/21/using-the-singleton-pattern-in-objective-c/ because it seemed reasonable
+*/
+
 static PDKeychainBindingsController *sharedInstance = nil;
 
-#if !TARGET_OS_IPHONE
-@interface PDKeychainBindingsController () {
-	SecKeychainRef		_secKeychainRef;
++ (PDKeychainBindingsController*) sharedKeychainBindingsController {
+    static dispatch_once_t onceQueue;
+
+    dispatch_once(&onceQueue, ^{
+        sharedInstance = [[self alloc] init];
+    });
+
+	return sharedInstance;
 }
-@end
-#endif
 
-@implementation PDKeychainBindingsController
-
-#pragma mark -
-#pragma mark External Keychain Access (OSX)
+#pragma mark - External Keychain Access (OSX)
 
 #if !TARGET_OS_IPHONE
 
-- (NSError*)NSErrorFromOSStatus:(OSStatus)status
-{
+- (NSError*)NSErrorFromOSStatus:(OSStatus)status {
 	// get error description
 	NSString *description = (__bridge_transfer NSString*)SecCopyErrorMessageString(status, NULL);
 	return [NSError errorWithDomain:NSOSStatusErrorDomain
@@ -43,8 +46,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
 						   userInfo:@{ NSLocalizedDescriptionKey : description}];
 }
 
-- (void)useDefaultKeychain
-{
+- (void)useDefaultKeychain {
 	if( _secKeychainRef ) {
 		SecKeychainLock(_secKeychainRef);
 		CFRelease(_secKeychainRef);
@@ -52,8 +54,7 @@ static PDKeychainBindingsController *sharedInstance = nil;
 	}
 }
 
-- (BOOL)useExternalKeychainFileWithPath:(NSString*)path password:(NSString*)password error:(NSError**)error
-{
+- (BOOL)useExternalKeychainFileWithPath:(NSString*)path password:(NSString*)password error:(NSError**)error {
 	if( _secKeychainRef ) {
 		SecKeychainLock(_secKeychainRef);
 		// free current keychainRef
@@ -96,8 +97,7 @@ handleError:
 	return NO;
 }
 
-- (BOOL)removeExternalKeychainFileWithError:(NSError**)error
-{
+- (BOOL)removeExternalKeychainFileWithError:(NSError**)error {
 	if( _secKeychainRef ) {
 		OSStatus status = SecKeychainDelete(_secKeychainRef);
 		if( status != errSecSuccess ) {
@@ -115,8 +115,7 @@ handleError:
 	return YES;
 }
 
-- (void)dealloc
-{
+- (void) dealloc {
 	// release
 	if( _secKeychainRef ) {
 		SecKeychainLock(_secKeychainRef);
@@ -126,8 +125,7 @@ handleError:
 
 #endif
 
-#pragma mark -
-#pragma mark Keychain Access
+#pragma mark - Keychain Access
 
 - (NSString*)serviceName {
 	return [[NSBundle mainBundle] bundleIdentifier];
@@ -163,7 +161,6 @@ handleError:
 #endif
 	return string;	
 }
-
 
 - (BOOL)storeString:(NSString*)string forKey:(NSString*)key {
     return [self storeString:string forKey:key accessibleAttribute:kSecAttrAccessibleWhenUnlocked];
@@ -248,22 +245,9 @@ return !result;
     }
 }
 
-#pragma mark -
-#pragma mark Singleton Stuff
+#pragma mark - Business Logic
 
-+ (PDKeychainBindingsController *)sharedKeychainBindingsController 
-{
-    static dispatch_once_t onceQueue;
-
-    dispatch_once(&onceQueue, ^{
-        sharedInstance = [[self alloc] init];
-    });
-
-	return sharedInstance;
-}
-
-#pragma mark -
-#pragma mark Business Logic
+@synthesize keychainBindings = _keychainBindings;
 
 - (PDKeychainBindings *) keychainBindings {
     if (_keychainBindings == nil) {
@@ -275,14 +259,14 @@ return !result;
     return _keychainBindings;
 }
 
--(id) values {
+- values {
     if (_valueBuffer==nil) {
         _valueBuffer = [[NSMutableDictionary alloc] init];
     }
     return _valueBuffer;
 }
 
-- (id)valueForKeyPath:(NSString *)keyPath {
+- valueForKeyPath:(NSString *)keyPath {
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
         //This is a values keyPath, so we need to check the keychain
@@ -299,11 +283,11 @@ return !result;
     return [super valueForKeyPath:keyPath];
 }
 
-- (void)setValue:(id)value forKeyPath:(NSString *)keyPath {
+- (void)setValue:value forKeyPath:(NSString*)keyPath {
     [self setValue:value forKeyPath:keyPath accessibleAttribute:kSecAttrAccessibleWhenUnlocked];
 }
 
-- (void)setValue:(id)value forKeyPath:(NSString *)keyPath accessibleAttribute:(CFTypeRef)accessibleAttribute {
+- (void)setValue:value forKeyPath:(NSString*)keyPath accessibleAttribute:(CFTypeRef)accessibleAttribute {
     NSRange firstSeven=NSMakeRange(0, 7);
     if (NSEqualRanges([keyPath rangeOfString:@"values."],firstSeven)) {
         //This is a values keyPath, so we need to check the keychain

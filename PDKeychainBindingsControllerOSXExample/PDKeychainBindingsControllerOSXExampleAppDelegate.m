@@ -12,33 +12,26 @@
 
 @implementation PDKeychainBindingsControllerOSXExampleAppDelegate
 
-@synthesize window;
-@synthesize RevealLabel;
-@synthesize passwordField;
-@synthesize RevealConcealButton;
+@synthesize window, RevealLabel, passwordField, RevealConcealButton;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationDidFinishLaunching:(NSNotification *)n
 {
-    // Insert code here to initialize your application
-    [passwordField bind:@"value"
-               toObject:[PDKeychainBindingsController sharedKeychainBindingsController]
-            withKeyPath:[NSString stringWithFormat:@"values.%@",@"passwordString"]
-                options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
-                                                    forKey:@"NSContinuouslyUpdatesValue"]];
+  [passwordField bind:NSValueBinding
+             toObject:PDKeychainBindingsController.sharedKeychainBindingsController
+          withKeyPath:[NSString stringWithFormat:@"values.%@",@"passwordString"]
+              options:@{@"NSContinuouslyUpdatesValue":@YES}];
 }
 
 - (IBAction)toggleRevealConceal:(id)sender {
-    PDKeychainBindings *bindings=[PDKeychainBindings sharedKeychainBindings];
-    if ([[RevealConcealButton title] isEqualToString:@"Reveal"]) {
-        [RevealLabel setStringValue:
-         [bindings stringForKey:@"passwordString"]
-         ];
-        [RevealConcealButton setTitle:@"Conceal"];
-    } else {
-        //Conceal
-        [RevealLabel setStringValue:@""];
-        [RevealConcealButton setTitle:@"Reveal"];
-    }
+
+  PDKeychainBindings *bindings = PDKeychainBindings.sharedKeychainBindings;
+  BOOL reveal = [RevealConcealButton.title isEqualToString:@"Reveal"];
+
+  RevealLabel.stringValue   = reveal ? [bindings stringForKey:@"passwordString"] : @"";
+  RevealConcealButton.title = reveal ? @"Conceal" : @"Reveal";
 }
 
 @end
+
+int main(int argc, char *argv[]) { return NSApplicationMain(argc, (const char **)argv); }
+

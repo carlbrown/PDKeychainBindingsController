@@ -6,46 +6,26 @@
 //  Copyright 2011 PDAgent, LLC. Released under MIT License.
 //
 
-#import "PDKeychainBindingsTest.h"
 #import "PDKeychainBindings.h"
 #import <Security/Security.h>
 
+@interface PDKeychainBindingsTest : SenTestCase
+@end
+
 @implementation PDKeychainBindingsTest
-
-- (NSString*) stringWithUUID {
-    CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
-    //get the string representation of the UUID
-    NSString	*uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuidObj);
-    CFRelease(uuidObj);
-    return uuidString;
-}
-
-- (void)setUp
-{
-    [super setUp];
-    
-    // Set-up code here.
-}
-
-- (void)tearDown
-{
-    // Tear-down code here.
-    
-    [super tearDown];
-}
 
 - (void)testStandardBindingsExists
 {
-    STAssertNotNil([PDKeychainBindings sharedKeychainBindings], @"PDKeychainBindings sharedKeychainBindings was nil!!");
+    STAssertNotNil(PDKeychainBindings.sharedKeychainBindings, @"PDKeychainBindings sharedKeychainBindings was nil!!");
 }
 
 - (void)testStandardBindingsWorksAtAll
 {
     //Decide what we're going to set it to
-    NSString *targetString = [self stringWithUUID];
+    NSString *targetString = UUIDString();
     
     //Now set it
-    [[PDKeychainBindings sharedKeychainBindings] setObject:targetString forKey:@"testObject"];
+    [PDKeychainBindings.sharedKeychainBindings setObject:targetString forKey:@"testObject"];
     
     //Now make sure it got set correctly
     STAssertNotNil([[PDKeychainBindings sharedKeychainBindings] objectForKey:@"testObject"], @"PDKeychainBindings sharedKeychainBindings was nil!!");

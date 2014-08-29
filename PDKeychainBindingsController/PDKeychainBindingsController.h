@@ -6,31 +6,30 @@
 //  Copyright 2011 PDAgent, LLC. Released under MIT License.
 //
 
-#import <Foundation/Foundation.h>
 #import "PDKeychainBindings.h"
 
+@interface PDKeychainBindingsController : NSObject
 
-@interface PDKeychainBindingsController : NSObject {
-@private
-    PDKeychainBindings *_keychainBindings;
-    NSMutableDictionary *_valueBuffer;
-}
+@property (readonly) PDKeychainBindings* keychainBindings;
 
-+ (PDKeychainBindingsController *)sharedKeychainBindingsController;
-- (PDKeychainBindings *) keychainBindings;
++ (PDKeychainBindingsController*) sharedKeychainBindingsController;
 
-// Only for OSX
-#if !TARGET_OS_IPHONE
-- (BOOL)useExternalKeychainFileWithPath:(NSString*)path password:(NSString*)password error:(NSError**)error;
-- (void)useDefaultKeychain;
-- (BOOL)removeExternalKeychainFileWithError:(NSError**)error;
+// KVO-observable accessor property representing the PDKeychainBindings' values.
+
+@property (readonly) id values;
+
+- (void)          setValue:x        forKeyPath:(NSString*)kp accessibleAttribute:(CFTypeRef)aa;
+- (BOOL)       storeString:(NSString*)s forKey:(NSString*)k  accessibleAttribute:(CFTypeRef)aa;
+- (BOOL)       storeString:(NSString*)s forKey:(NSString*)k;
+- (NSString*)                     stringForKey:(NSString*)k;
+
+#if !TARGET_OS_IPHONE // The following methods are OSX-only
+
+- (void)                  useDefaultKeychain;
+- (BOOL) removeExternalKeychainFileWithError:(NSError**)e;
+- (BOOL)     useExternalKeychainFileWithPath:(NSString*)x
+                                    password:(NSString*)p
+                                       error:(NSError**)e;
 #endif
 
-- (id)values;    // accessor object for PDKeychainBindings values. This property is observable using key-value observing.
-
-- (NSString*)stringForKey:(NSString*)key;
-- (BOOL)storeString:(NSString*)string forKey:(NSString*)key;
-- (BOOL)storeString:(NSString*)string forKey:(NSString*)key accessibleAttribute:(CFTypeRef)accessibleAttribute;
-- (void)setValue:(id)value forKeyPath:(NSString *)keyPath accessibleAttribute:(CFTypeRef)accessibleAttribute;
 @end
-

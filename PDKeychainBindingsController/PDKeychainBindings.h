@@ -8,22 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@interface PDKeychainBindings : NSObject
 
-@interface PDKeychainBindings : NSObject {
-@private
-    
-}
 
 + (PDKeychainBindings *)sharedKeychainBindings;
 
-- (id)objectForKey:(NSString *)defaultName;
-- (void)setObject:(NSString *)value forKey:(NSString *)defaultName;
-- (void)setObject:(NSString *)value forKey:(NSString *)defaultName accessibleAttribute:(CFTypeRef)accessibleAttribute;
 
-- (void)setString:(NSString *)value forKey:(NSString *)defaultName;
-- (void)setString:(NSString *)value forKey:(NSString *)defaultName accessibleAttribute:(CFTypeRef)accessibleAttribute;
+-                         objectForKey:(NSString*)def;
+- (void)            removeObjectForKey:(NSString*)def;
+- (NSString*)             stringForKey:(NSString*)def;
+- (void) setObject:(NSString*)x forKey:(NSString*)def;
+- (void) setObject:(NSString*)x forKey:(NSString*)def
+                   accessibleAttribute:(CFTypeRef)aa;
 
-- (void)removeObjectForKey:(NSString *)defaultName;
-
-- (NSString *)stringForKey:(NSString *)defaultName;
+- (void) setString:(NSString*)s forKey:(NSString*)def;
+- (void) setString:(NSString*)s forKey:(NSString*)def
+                   accessibleAttribute:(CFTypeRef)aa;
 @end
