@@ -30,7 +30,7 @@
 - (void)testStandardBindingsControllerSetRetrieval
 {
   //Decide what we're going to set it to
-  NSString *targetString = [self stringWithUUID];
+  NSString *targetString = UUIDString();
 
   //Pull the PDKeychainBindingsController into a local variable just so we can look at it in the debugger if we want to see what's going on
   PDKeychainBindingsController *controller = [PDKeychainBindingsController sharedKeychainBindingsController];
