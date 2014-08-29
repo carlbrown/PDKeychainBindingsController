@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D39ABDEE13CA80D90078DA13"
                BuildableName = "PDKeychainBindingsControllerOSXExample.app"
-               BlueprintName = "PDKeychainBindingsControllerOSXExample"
+               BlueprintName = "PDKeychainBCOSXExample"
                ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D39ABE0D13CA80D90078DA13"
                BuildableName = "PDKeychainBindingsControllerOSXExampleTests.octest"
-               BlueprintName = "PDKeychainBindingsControllerOSXExampleTests"
+               BlueprintName = "PDKeychainBCOSXTests"
                ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,7 +56,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D39ABDEE13CA80D90078DA13"
             BuildableName = "PDKeychainBindingsControllerOSXExample.app"
-            BlueprintName = "PDKeychainBindingsControllerOSXExample"
+            BlueprintName = "PDKeychainBCOSXExample"
             ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -76,7 +76,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D39ABDEE13CA80D90078DA13"
             BuildableName = "PDKeychainBindingsControllerOSXExample.app"
-            BlueprintName = "PDKeychainBindingsControllerOSXExample"
+            BlueprintName = "PDKeychainBCOSXExample"
             ReferencedContainer = "container:PDKeychainBindingsController.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

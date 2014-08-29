@@ -9,16 +9,29 @@
 
 @interface PDKeychainBindings : NSObject
 
-+ (PDKeychainBindings *)sharedKeychainBindings;
++ (instancetype) sharedKeychainBindings;
 
--                         objectForKey:(NSString*)def;
-- (void)            removeObjectForKey:(NSString*)def;
-- (NSString*)             stringForKey:(NSString*)def;
-- (void) setObject:(NSString*)x forKey:(NSString*)def;
-- (void) setObject:(NSString*)x forKey:(NSString*)def
-                   accessibleAttribute:(CFTypeRef)aa;
+- (NSString*)  stringForKey:(NSString*)def;
 
-- (void) setString:(NSString*)s forKey:(NSString*)def;
-- (void) setString:(NSString*)s forKey:(NSString*)def
-                   accessibleAttribute:(CFTypeRef)aa;
+- (void)          setString:(NSString*)s
+                     forKey:(NSString*)def;
+
+- (void)          setString:(NSString*)s
+                     forKey:(NSString*)def
+        accessibleAttribute:(CFTypeRef)aa;
+
+
+-              objectForKey:(NSString*)def;
+
+- (void)          setObject:(NSString*)x
+                     forKey:(NSString*)def;
+
+- (void)          setObject:(NSString*)x
+                     forKey:(NSString*)def
+       accessibleAttribute:(CFTypeRef)aa;
+
+- (void) removeObjectForKey:(NSString*)def;
+
+
+
 @end

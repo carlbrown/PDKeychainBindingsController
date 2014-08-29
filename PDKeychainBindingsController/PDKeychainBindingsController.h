@@ -11,16 +11,24 @@
 
 @property (readonly) PDKeychainBindings* keychainBindings;
 
-+ (PDKeychainBindingsController*) sharedKeychainBindingsController;
++ (instancetype) sharedKeychainBindingsController;
 
-// KVO-observable accessor property representing the PDKeychainBindings' values.
+/// KVO-observable accessor property representing the PDKeychainBindings' values.
 
 @property (readonly) id values;
 
-- (void)          setValue:x        forKeyPath:(NSString*)kp accessibleAttribute:(CFTypeRef)aa;
-- (BOOL)       storeString:(NSString*)s forKey:(NSString*)k  accessibleAttribute:(CFTypeRef)aa;
-- (BOOL)       storeString:(NSString*)s forKey:(NSString*)k;
-- (NSString*)                     stringForKey:(NSString*)k;
+- (void)          setValue:x
+                forKeyPath:(NSString*)kp
+       accessibleAttribute:(CFTypeRef)aa;
+
+- (BOOL)       storeString:(NSString*)s
+                    forKey:(NSString*)k
+       accessibleAttribute:(CFTypeRef)aa;
+
+- (BOOL)       storeString:(NSString*)s
+                    forKey:(NSString*)k;
+
+- (NSString*) stringForKey:(NSString*)k;
 
 #if !TARGET_OS_IPHONE // The following methods are OSX-only
 
