@@ -1,3 +1,9 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+The world has moved onto [Swift](https://github.com/apple/swift), and this project didn't turn out to have been built in a Swift-friendly way. You should use something like [this](https://github.com/jrendel/SwiftKeychainWrapper) or [this](https://github.com/kishikawakatsumi/KeychainAccess)
+
+-----------------------------DEPRECATED OLD README FOR POSTERITY---------------------------------
+
 This project is intended to make using the Mac OSX and iOS Keychains as easy as NSUserDefaults.
 
 It is a KVO-compliant Cocoa wrapper around the  Mac OSX and iOS Keychains, and the model for this wrapper is NSUserDefaults, so the intent is that for the common cases you would normally want to call:
